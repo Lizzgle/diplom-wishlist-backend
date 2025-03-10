@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{2F8B63A4-B96C-4E31-9DB5-354C50F4519D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Domain", "Identity\Identity.Domain\Identity.Domain.csproj", "{5F47D5D6-06D2-43C0-ABCA-8C6D9B49ADF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5F47D5D6-06D2-43C0-ABCA-8C6D9B49ADF5} = {2F8B63A4-B96C-4E31-9DB5-354C50F4519D}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F47D5D6-06D2-43C0-ABCA-8C6D9B49ADF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F47D5D6-06D2-43C0-ABCA-8C6D9B49ADF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F47D5D6-06D2-43C0-ABCA-8C6D9B49ADF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F47D5D6-06D2-43C0-ABCA-8C6D9B49ADF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
