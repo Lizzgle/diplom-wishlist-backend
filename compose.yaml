@@ -1,0 +1,6 @@
+﻿services:
+  identity.presentation:
+    image: identity.presentation
+    build:
+      context: .
+      dockerfile: Identity/Identity.Presentation/Dockerfile
