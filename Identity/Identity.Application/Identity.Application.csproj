@@ -8,15 +8,22 @@
 
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="14.0.0"/>
-        <PackageReference Include="MediatR" Version="12.4.1"/>
+        <PackageReference Include="MediatR" Version="12.5.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.3"/>
         <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.3"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Common\Common.DI\Common.DI.csproj"/>
         <ProjectReference Include="..\..\Common\Common.Exceptions\Common.Exceptions.csproj"/>
+        <ProjectReference Include="..\..\Common\Common\Common.csproj" />
+        <ProjectReference Include="..\Identity.Contracts\Identity.Contracts.csproj" />
         <ProjectReference Include="..\Identity.Domain\Identity.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Usecases\FriendRequests\Queries\" />
+      <Folder Include="Usecases\Users\Commands\UpdateUser\" />
     </ItemGroup>
 
 </Project>

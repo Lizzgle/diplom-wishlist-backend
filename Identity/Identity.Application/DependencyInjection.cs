@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Common.DI;
+using Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.Application;

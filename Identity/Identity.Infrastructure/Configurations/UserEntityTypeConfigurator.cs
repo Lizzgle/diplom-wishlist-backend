@@ -1,4 +1,5 @@
 ﻿using Identity.Domain;
+using Identity.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,5 +25,7 @@ public class UserEntityTypeConfigurator : IEntityTypeConfiguration<User>
         builder.Ignore(x => x.PhoneNumberConfirmed);
         builder.Ignore(x => x.LockoutEnd);
         builder.Ignore(x => x.LockoutEnabled);
+        
+        builder.SeedUsers();
     }
 }

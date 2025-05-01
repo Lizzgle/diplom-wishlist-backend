@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddPresentationServices();
+builder.Services.AddPresentationServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -21,5 +21,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// using (var scope = app.Services.CreateScope())
+// {
+//     scope.ServiceProvider.GetService<AppDbContext>().Database.Migrate();
+// }
 
 app.Run();

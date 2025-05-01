@@ -1,32 +1,37 @@
-﻿using AutoMapper;
-using Identity.Application.Usecases.Users.Commands.Registration;
-using Identity.Presentation.Models.Register;
+﻿using System.Security.Claims;
+using AutoMapper;
+using Identity.Application.Usecases.Users.Commands.DeleteUser;
+using Identity.Application.Usecases.Users.Queries.GetUserByEmailOrName;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Presentation.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/users")]
 [ApiController]
-public class UsersController : Controller
+public class UsersController(IMapper mapper, IMediator mediator) : Controller
 {
-    private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
-
-    public UsersController(IMapper mapper, IMediator mediator)
+    [HttpGet]
+    public async Task<IActionResult> Get([FromQuery] string query, CancellationToken cancellationToken)
     {
-        _mapper = mapper;
-        _mediator = mediator;
+        var request = new GetUsersByEmailOrNameRequest() { Query = query };
+        
+        var users = await mediator.Send(request, cancellationToken);
+        
+        return Ok(users);
     }
-
-    [HttpPost("register")]
-    public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest request,
-                                                               CancellationToken cancellationToken)
+    
+    [HttpDelete]
+    [Authorize]
+    public async Task<IActionResult> Delete(CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<RegistrationRequest>(request);
-
-        var response = await _mediator.Send(command, cancellationToken);
-
-        return Ok(_mapper.Map<RegisterResponse>(response));
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        var request = new DeleteUserRequest() { Id = userId! };
+        
+        await mediator.Send(request, cancellationToken);
+        
+        return Ok();
     }
 }

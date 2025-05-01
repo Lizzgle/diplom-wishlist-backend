@@ -5,14 +5,23 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>eaa60f38-bf1e-4f38-bb06-e768498d4304</UserSecretsId>
+        <DockerfileContext>..\..</DockerfileContext>
+        <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.7.0" />
+        <PackageReference Include="Microsoft.OpenApi" Version="1.6.24" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.1" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.7.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,8 +31,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Identity.Application\Identity.Application.csproj"/>
-        <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\Common\Common.Notification\Common.Notification.csproj" />
+        <ProjectReference Include="..\..\Common\Common\Common.csproj" />
+        <ProjectReference Include="..\Identity.Application\Identity.Application.csproj" />
+        <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

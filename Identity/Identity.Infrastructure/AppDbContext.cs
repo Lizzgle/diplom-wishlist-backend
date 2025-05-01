@@ -8,6 +8,10 @@ namespace Identity.Infrastructure;
 
 public class AppDbContext : IdentityDbContext<User, IdentityRole, string>
 {
+    public DbSet<User> Users { get; set; }
+    public DbSet<FriendRequest> FriendRequests { get; set; }
+    public DbSet<Friendship> Friendships { get; set; }
+    
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -15,5 +19,9 @@ public class AppDbContext : IdentityDbContext<User, IdentityRole, string>
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new RoleEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new UserRoleEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new FriendRequestEntityTypeConfigurator());
+        modelBuilder.ApplyConfiguration(new FriendshipEntityTypeConfigurator());
     }
 }

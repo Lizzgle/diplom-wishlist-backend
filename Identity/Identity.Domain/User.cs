@@ -4,5 +4,7 @@ namespace Identity.Domain;
 
 public class User : IdentityUser
 {
-    public required string DateOfBirth { get; set; }
+    public DateTimeOffset DateOfBirth { get; set; }
+
+    public List<IdentityRole> Roles { get; set; } = new List<IdentityRole>();
 }

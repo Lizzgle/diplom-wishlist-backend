@@ -1,3 +1,8 @@
-﻿namespace Identity.Contracts.Repositories;
+﻿using Identity.Domain;
 
-public interface IUserRepository { }
+namespace Identity.Contracts.Repositories;
+
+public interface IUserRepository
+{
+    Task<List<User>> GetUsersByEmailOrNameAsync(string emailOrName, CancellationToken cancellationToken = default);
+}
