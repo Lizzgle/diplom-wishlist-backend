@@ -15,8 +15,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Common\Common.Exceptions\Common.Exceptions.csproj"/>
         <ProjectReference Include="..\..\Common\Common\Common.csproj" />
+        <ProjectReference Include="..\..\Core\Core.Exceptions\Core.Exceptions.csproj" />
+        <ProjectReference Include="..\..\Core\Core.Models\Core.Models.csproj" />
         <ProjectReference Include="..\Identity.Contracts\Identity.Contracts.csproj" />
         <ProjectReference Include="..\Identity.Domain\Identity.Domain.csproj"/>
     </ItemGroup>

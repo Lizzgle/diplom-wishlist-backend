@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using Common.Exceptions;
-using Identity.Application.Usecases.FriendRequests.Queries.GetReceivedFriendRequests;
+using Core.Exceptions;
 using Identity.Contracts.Repositories;
 using Identity.Domain;
 using MediatR;

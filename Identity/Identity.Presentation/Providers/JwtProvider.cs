@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Common.Models;
-using Common.Options;
+using Core.Api.Options;
+using Core.Models;
 using Identity.Application.Providers;
 using Identity.Contracts.Models;
 using Identity.Contracts.Services;

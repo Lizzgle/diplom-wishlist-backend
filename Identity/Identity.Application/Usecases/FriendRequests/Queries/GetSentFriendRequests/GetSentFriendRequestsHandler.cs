@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Common.Exceptions;
+using Core.Exceptions;
 using Identity.Contracts.Repositories;
 using Identity.Domain;
 using MediatR;

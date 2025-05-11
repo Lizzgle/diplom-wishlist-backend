@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Common.Exceptions;
+using Core.Exceptions;
+using Core.Exceptions;
 using Identity.Contracts.Repositories;
 using Identity.Domain;
 using MediatR;
@@ -20,6 +21,7 @@ public class GetReceivedFriendRequestsHandler(
         var friendRequests = await friendRequestRepository.GetReceivedFriendRequestsAsync(request.UserId, cancellationToken);
         
         var friendRequestsDtos = mapper.Map<List<FriendRequestDto>>(friendRequests);
+        
         return new GetReceivedFriendRequestsResponse() { FriendRequests = friendRequestsDtos };
     }
 }

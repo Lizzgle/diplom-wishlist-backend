@@ -26,6 +26,6 @@ public class UserEntityTypeConfigurator : IEntityTypeConfiguration<User>
         builder.Ignore(x => x.LockoutEnd);
         builder.Ignore(x => x.LockoutEnabled);
         
-        builder.SeedUsers();
+        // builder.SeedUsers();
     }
 }

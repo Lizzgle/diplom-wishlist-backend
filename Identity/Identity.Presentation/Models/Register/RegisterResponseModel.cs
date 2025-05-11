@@ -2,7 +2,7 @@
 
 public class RegisterResponseModel
 {
-    public required string Email { get; set; }
+    public string Email { get; set; }
     
-    public required string Url { get; set; }
+    public string Url { get; set; }
 }

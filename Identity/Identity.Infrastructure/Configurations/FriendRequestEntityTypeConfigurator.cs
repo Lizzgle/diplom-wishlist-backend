@@ -16,6 +16,9 @@ public class FriendRequestEntityTypeConfigurator : IEntityTypeConfiguration<Frie
         builder.Property(f => f.ReceiverId).IsRequired();
         builder.Property(f => f.Status).IsRequired();
         builder.Property(f => f.CreatedAt).IsRequired();
+        
+        builder.HasIndex(f => new {f.SenderId, f.ReceiverId})
+            .IsUnique();
 
         builder.HasOne(fr => fr.Sender)
             .WithMany()

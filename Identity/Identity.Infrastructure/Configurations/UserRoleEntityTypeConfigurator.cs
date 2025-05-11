@@ -16,6 +16,6 @@ public class UserRoleEntityTypeConfigurator : IEntityTypeConfiguration<IdentityU
         builder.Property(ur => ur.RoleId).IsRequired();
         builder.Property(ur => ur.UserId).IsRequired();
         
-        builder.SeedUserRoles();
+        // builder.SeedUserRoles();
     }
 }

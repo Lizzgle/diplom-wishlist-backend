@@ -15,8 +15,6 @@ public class RoleEntityTypeConfigurator : IEntityTypeConfiguration<IdentityRole>
         
         builder.Property(r => r.Name).IsRequired();
         builder.Property(r => r.NormalizedName).IsRequired();
-
-        builder.Ignore(r => r.ConcurrencyStamp);
         
         builder.SeedRoles();
     }

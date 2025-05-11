@@ -1,4 +1,4 @@
-﻿using Common.Models;
+﻿using Core.Models;
 using MediatR;
 
 namespace Identity.Application.Usecases.Account.Commands.Login;

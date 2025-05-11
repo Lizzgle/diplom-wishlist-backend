@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Security.Claims;
 using AutoMapper;
-using Common.Extensions;
 using Common.Notification.Interfaces;
 using Common.Notification.Models;
+using Core.Api.Extensions;
 using Identity.Application.Usecases.Account.Commands.ConfirmEmail;
 using Identity.Application.Usecases.Account.Commands.Login;
 using Identity.Application.Usecases.Account.Commands.RefreshToken;
@@ -39,6 +39,7 @@ public class AccountController : Controller
     }
 
     [HttpPost("register")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RegisterResponseModel))]
     public async Task<ActionResult<RegisterResponseModel>> Register([FromBody] RegisterRequest request,
@@ -52,7 +53,7 @@ public class AccountController : Controller
             action: "ConfirmEmail",
             "Account", 
             new { email = request.Email, code = WebUtility.UrlEncode(response.Code) },
-            protocol: HttpContext.Request.Scheme);
+            protocol: HttpContext.Request.Scheme ?? "http");
 
         await _emailServiceSender.SendEmailAsync(
             new SendEmailArgs()
@@ -146,8 +147,9 @@ public class AccountController : Controller
         CancellationToken cancellationToken)
     {
         var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var deviceType = Request.Headers.GetDeviceType();
 
-        var command = new RefreshTokenRequest() { Id = id!, RefreshToken = refreshToken };
+        var command = new RefreshTokenRequest() { Id = id!, RefreshToken = refreshToken, DeviceType = deviceType };
         
         var response = await _mediator.Send(command, cancellationToken);
 

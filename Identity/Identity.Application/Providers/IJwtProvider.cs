@@ -1,4 +1,4 @@
-﻿using Common.Models;
+﻿using Core.Models;
 using Identity.Domain;
 
 namespace Identity.Application.Providers;

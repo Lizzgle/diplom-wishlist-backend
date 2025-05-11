@@ -9,11 +9,11 @@ public class FriendRequestDto
 {
     public required string Id { get; set; }
     
-    public required string SenderId { get; set; }
+    public required string ReceiverId { get; set; }
     
-    public required string SenderName { get; set; }
+    public required string ReceiverName { get; set; }
     
-    public required string SenderEmail { get; set; }
+    public required string ReceiverEmail { get; set; }
     
     // TODO add avatar
 }

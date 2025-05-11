@@ -1,4 +1,4 @@
-﻿using Common.Models;
+﻿using Core.Models;
 using Identity.Contracts.Models;
 
 namespace Identity.Contracts.Services;

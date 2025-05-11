@@ -1,30 +1,20 @@
 ﻿using AutoMapper;
-using Common.Exceptions;
+using Core.Exceptions;
 using Identity.Contracts.Repositories;
 using Identity.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ArgumentException = Common.Exceptions.ArgumentException;
+using ArgumentException = Core.Exceptions.ArgumentException;
 
 namespace Identity.Application.Usecases.Account.Commands.Registration;
 
-public class RegistrationHandler : IRequestHandler<RegistrationRequest, RegistrationResponse>
+public class RegistrationHandler(UserManager<User> userManager, IMapper mapper)
+    : IRequestHandler<RegistrationRequest, RegistrationResponse>
 {
-    private readonly IMapper _mapper;
-    private readonly UserManager<User> _userManager;
-    private readonly IUserRepository _userRepository;
-
-    public RegistrationHandler(UserManager<User> userManager, IMapper mapper, IUserRepository userRepository)
-    {
-        _userManager = userManager;
-        _mapper = mapper;
-        _userRepository = userRepository;
-    }
-
     public async Task<RegistrationResponse> Handle(RegistrationRequest request, CancellationToken cancellationToken)
     {
-        var query = _userManager.Users.Where(u => u.Email == request.Email || u.UserName == request.UserName);
+        var query = userManager.Users.Where(u => u.Email == request.Email || u.UserName == request.UserName);
         
         var users = await query.Where(u => u.EmailConfirmed).ToListAsync(cancellationToken);
 
@@ -34,17 +24,17 @@ public class RegistrationHandler : IRequestHandler<RegistrationRequest, Registra
         if (request.Password != request.ConfirmPassword)
             throw new ArgumentException("Passwords do not match");
 
-        var user = _mapper.Map<User>(request);
+        var user = mapper.Map<User>(request);
 
         if (query.Count() is not 0)
-            await _userManager.UpdateAsync(user);
+            await userManager.UpdateAsync(user);
         else
         {
-            var t = await _userManager.CreateAsync(user, request.Password);
-            await _userManager.AddToRoleAsync(user, "user");
+            await userManager.CreateAsync(user, request.Password);
+            await userManager.AddToRoleAsync(user, "user");
         }
         
-        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
         return new RegistrationResponse() { Email = request.Email, Code = code };
     }

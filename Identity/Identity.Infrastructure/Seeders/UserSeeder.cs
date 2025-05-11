@@ -16,7 +16,7 @@ public static class UserSeeder
                 Email = "admin@admin.com",
                 NormalizedEmail = "ADMIN@ADMIN.COM",
                 EmailConfirmed = true,
-                DateOfBirth = DateTime.Now.AddYears(-20)
+                DateOfBirth = new DateTimeOffset(new DateTime(2000, 1, 1), TimeSpan.Zero)
             },
             new User()
             {
@@ -26,7 +26,7 @@ public static class UserSeeder
                 Email = "user@user.com",
                 NormalizedEmail = "USER@USER.COM",
                 EmailConfirmed = true,
-                DateOfBirth = DateTime.Now.AddYears(-20)
+                DateOfBirth = new DateTimeOffset(new DateTime(2000, 1, 1), TimeSpan.Zero)
             }
         ]);
     }

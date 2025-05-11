@@ -1,9 +1,9 @@
-﻿using Common.Exceptions;
+﻿using Core.Exceptions;
 using Identity.Contracts.Repositories;
 using Identity.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using ArgumentException = Common.Exceptions.ArgumentException;
+using ArgumentException = Core.Exceptions.ArgumentException;
 
 namespace Identity.Application.Usecases.FriendRequests.Commands.SendFriendRequest;
 

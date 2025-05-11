@@ -2,7 +2,7 @@
 using Common;
 using Common.Notification.Implementations;
 using Common.Notification.Interfaces;
-using Common.Options;
+using Core.Api.Options;
 using Identity.Application.Providers;
 using Identity.Presentation.Providers;
 using Microsoft.OpenApi.Models;
@@ -16,6 +16,7 @@ public static class DependencyInjection
         services.ConfigureSwagger();
         services.AddFluentValidationConfig(Assembly.GetExecutingAssembly());
         services.AddAutoMapperConfig(Assembly.GetExecutingAssembly());
+        services.AddCorsPolicy();
         
         services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 
@@ -43,6 +44,20 @@ public static class DependencyInjection
             });
 
            
+        });
+        return services;
+    }
+
+    public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
         });
         return services;
     }

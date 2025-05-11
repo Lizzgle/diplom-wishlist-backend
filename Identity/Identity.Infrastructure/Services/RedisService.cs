@@ -1,4 +1,4 @@
-﻿using Common.Models;
+﻿using Core.Models;
 using Identity.Contracts.Models;
 using Identity.Contracts.Services;
 using Microsoft.Extensions.Caching.Distributed;

@@ -1,4 +1,4 @@
-﻿using Common.Exceptions;
+﻿using Core.Exceptions;
 using Identity.Application.Providers;
 using Identity.Domain;
 using MediatR;
@@ -35,7 +35,7 @@ public class LoginHandler : IRequestHandler<LoginRequest, LoginResponse>
             isPersistent: false, lockoutOnFailure: false);
         
         if (!result.Succeeded)
-            throw new InvalidAuthException("username/email or password is incorrect.");
+            throw new InvalidAuthException("Username/email or password is incorrect.");
 
         var jwt = await _jwtProvider.GenerateJwtAsync(user);
         var refresh = await _jwtProvider.GetRefreshTokenForDeviceAsync(user.Id, request.DeviceType, cancellationToken) ??

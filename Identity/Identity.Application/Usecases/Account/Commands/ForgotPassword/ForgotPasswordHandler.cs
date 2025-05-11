@@ -1,4 +1,4 @@
-﻿using Common.Exceptions;
+﻿using Core.Exceptions;
 using Identity.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +18,7 @@ public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordRequest, Forg
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
         if (user is null || !user.EmailConfirmed)
-            throw new NotFoundException("user not found");
+            throw new NotFoundException("User not found");
         
         var code = await _userManager.GeneratePasswordResetTokenAsync(user);
         
