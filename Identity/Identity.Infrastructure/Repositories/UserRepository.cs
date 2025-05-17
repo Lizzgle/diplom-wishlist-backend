@@ -13,4 +13,12 @@ public class UserRepository(AppDbContext context) : IUserRepository
                 .Where(u => u.Email!.Contains(query) || u.UserName!.Contains(query))
                 .ToListAsync(cancellationToken);
     }
+
+    public async Task<User?> GetUserByIdAsync(string id, CancellationToken cancellationToken = default)
+    {
+        return await context.Users
+            .AsNoTracking()
+            .Where(u => u.Id == id)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
 }

@@ -20,7 +20,7 @@ public class Wish
     
     public List<Link> Links { get; set; } = new List<Link>();
     
-    public FileData File { get; set; }
+    public FileData? File { get; set; }
     
     public Guid WishlistId { get; set; }
     

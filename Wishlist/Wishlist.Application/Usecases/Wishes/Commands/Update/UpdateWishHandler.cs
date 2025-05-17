@@ -21,11 +21,12 @@ public class UpdateWishHandler(IWishRepository wishRepository, IFileProvider fil
         if (await wishRepository.IsWishInWishlistExist(request.Name, wish.WishlistId, cancellationToken) && wish.Name != request.Name)
             throw new AlreadyExistException("Wish name already exists");
 
-        if (request.File?.FileName != wish.File.FileName)
+        if (request.File?.FileName != wish.File?.FileName)
         {
-            await fileProvider.DeleteFileAsync(request.UserId, wish.File.FileName);
+            if (wish.File is not null)
+                await fileProvider.DeleteFileAsync(request.UserId, wish.File.FileName);
             
-            if (request.File is not null && request.FileStream is not null)
+            if (request.File is not null && request.FileStream is not null )
                 await fileProvider.UploadFileAsync(request.UserId, request.File.FileName, request.FileStream);
         }
         

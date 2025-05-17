@@ -8,6 +8,15 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Wishlist/Wishlist.Presentation/Wishlist.Presentation.csproj", "Wishlist/Wishlist.Presentation/"]
+COPY ["Wishlist/Wishlist.Application/Wishlist.Application.csproj", "Wishlist/Wishlist.Application/"]
+COPY ["Wishlist/Wishlist.Contracts/Wishlist.Contracts.csproj", "Wishlist/Wishlist.Contracts/"]
+COPY ["Wishlist/Wishlist.Domain/Wishlist.Domain.csproj", "Wishlist/Wishlist.Domain/"]
+COPY ["Core/Core.Exceptions/Core.Exceptions.csproj", "Core/Core.Exceptions/"]
+COPY ["Core/Core.Api/Core.Api.csproj", "Core/Core.Api/"]
+COPY ["Core/Core.Models/Core.Models.csproj", "Core/Core.Models/"]
+COPY ["Wishlist/Wishlist.Infrastructure/Wishlist.Infrastructure.csproj", "Wishlist/Wishlist.Infrastructure/"]
+COPY ["Common/Common.Dropbox/Common.Dropbox.csproj", "Common/Common.Dropbox/"]
+COPY ["Common/Common/Common.csproj", "Common/Common/"]
 RUN dotnet restore "Wishlist/Wishlist.Presentation/Wishlist.Presentation.csproj"
 COPY . .
 WORKDIR "/src/Wishlist/Wishlist.Presentation"

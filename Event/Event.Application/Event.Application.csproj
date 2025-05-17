@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="14.0.0" />
+      <PackageReference Include="MediatR" Version="12.5.0" />
+      <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Common\Common.Refit\Common.Refit.csproj" />
+      <ProjectReference Include="..\..\Common\Common\Common.csproj" />
+      <ProjectReference Include="..\..\Core\Core.Exceptions\Core.Exceptions.csproj" />
+      <ProjectReference Include="..\Event.Contracts\Event.Contracts.csproj" />
+      <ProjectReference Include="..\Event.Domain\Event.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

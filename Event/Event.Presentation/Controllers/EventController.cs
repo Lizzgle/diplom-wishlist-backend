@@ -5,6 +5,7 @@ using Event.Application.Usecases.Events.Commands.Delete;
 using Event.Application.Usecases.Events.Commands.Update;
 using Event.Application.Usecases.Events.Queries.GetAllForUser;
 using Event.Application.Usecases.Events.Queries.GetById;
+using Event.Application.Usecases.Invitations.Queries.GetByEventId;
 using Event.Presentation.Models.Events;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -77,6 +78,19 @@ public class EventController(IMediator mediator, IMapper mapper) : Controller
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         var request = new GetAllForUserRequest() { UserId = userId! };
+        
+        var response = await mediator.Send(request, cancellationToken);
+        
+        return Ok(mapper.Map<GetEventByIdResponseModel>(response));
+    }
+    
+    [HttpGet("{id}/invitations")]
+    [Authorize]
+    public async Task<ActionResult<GetEventsResponseModel>> GetInvitationsByEventId([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        var request = new GetByEventIdRequest { UserId = userId!, EventId = id };
         
         var response = await mediator.Send(request, cancellationToken);
         

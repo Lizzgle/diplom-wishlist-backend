@@ -12,7 +12,7 @@ public class CreateWishlistHandler(IWishlistRepository wishlistRepository, IMapp
     public async Task Handle(CreateWishlistRequest request, CancellationToken cancellationToken)
     {
         var wishlist = await wishlistRepository.IsExistsByNameAsync(request.Name, request.UserId, cancellationToken);
-        if (!wishlist)
+        if (wishlist)
             throw new AlreadyExistException($"Wishlist with name = { request.Name } already exists");
 
         var newWishlist = mapper.Map<Domain.Wishlist>(request);

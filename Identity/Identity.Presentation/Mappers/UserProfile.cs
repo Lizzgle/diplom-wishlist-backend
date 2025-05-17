@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Identity.Application.Usecases.Account.Commands.Login;
 using Identity.Application.Usecases.Account.Commands.Registration;
+using Identity.Application.Usecases.Users.Queries.GetUserInfo;
+using Identity.Presentation.Models.GetUserInfo;
 using Identity.Presentation.Models.Login;
 using Identity.Presentation.Models.Register;
 
@@ -21,5 +23,11 @@ public class UserProfile : Profile
 
         CreateMap<LoginRequestModel, LoginRequest>();
         CreateMap<LoginResponse, LoginResponseModel>();
+        
+        CreateMap<GetUserInfoResponse, GetUserInfoResponseModel>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+            .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth));
     }
 }

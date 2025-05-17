@@ -13,7 +13,7 @@ using Wishlist.Presentation.Models.Wishlists;
 
 namespace Wishlist.Presentation.Controllers;
 
-[Route("api/wishlist")]
+[Route("api/wishlists")]
 [ApiController]
 public class WishlistController(IMediator mediator, IMapper mapper) : Controller
 {

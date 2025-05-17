@@ -2,6 +2,7 @@
 using Identity.Application.Usecases.Account.Commands.Registration;
 using Identity.Application.Usecases.Friends.Queries.GetFriends;
 using Identity.Application.Usecases.Users.Queries.GetUserByEmailOrName;
+using Identity.Application.Usecases.Users.Queries.GetUserInfo;
 using Identity.Domain;
 
 namespace Identity.Application.Mappers;
@@ -26,5 +27,11 @@ public class UserProfile : Profile
             .ForMember(dext => dext.FriendId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dext => dext.FriendEmail, opt => opt.MapFrom(src => src.Email))
             .ForMember(dext => dext.FriendName, opt => opt.MapFrom(src => src.UserName));
+
+        CreateMap<User, GetUserInfoResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+            .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth));
     }
 }

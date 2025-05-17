@@ -4,6 +4,7 @@ using AutoMapper;
 using Common.Notification.Interfaces;
 using Common.Notification.Models;
 using Core.Api.Extensions;
+using Core.Api.Options;
 using Identity.Application.Usecases.Account.Commands.ConfirmEmail;
 using Identity.Application.Usecases.Account.Commands.Login;
 using Identity.Application.Usecases.Account.Commands.RefreshToken;
@@ -16,6 +17,7 @@ using Identity.Presentation.Models.Register;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using ForgotPasswordRequest = Identity.Application.Usecases.Account.Commands.ForgotPassword.ForgotPasswordRequest;
 using ResetPasswordRequest = Identity.Application.Usecases.Account.Commands.ResetPassword.ResetPasswordRequest;
 
@@ -29,13 +31,15 @@ public class AccountController : Controller
     private readonly IMediator _mediator;
     
     private readonly IEmailServiceSender _emailServiceSender;
+    private readonly UrlOptions _urlOptions;
 
     public AccountController(IMapper mapper, IMediator mediator,
-        IEmailServiceSender emailServiceSender)
+        IEmailServiceSender emailServiceSender, IOptions<UrlOptions> urlOptions)
     {
         _mapper = mapper;
         _mediator = mediator;
         _emailServiceSender = emailServiceSender;
+        _urlOptions = urlOptions.Value;
     }
 
     [HttpPost("register")]
@@ -48,22 +52,18 @@ public class AccountController : Controller
         var command = _mapper.Map<RegistrationRequest>(request);
 
         var response = await _mediator.Send(command, cancellationToken);
-        
-        var callbackUrl =  Url.Action(
-            action: "ConfirmEmail",
-            "Account", 
-            new { email = request.Email, code = WebUtility.UrlEncode(response.Code) },
-            protocol: HttpContext.Request.Scheme ?? "http");
+
+        var confirmationUrl = $"{_urlOptions.ClientUrl}/auth/confirm-email?email={request.Email}&code={WebUtility.UrlEncode(response.Code)}";
 
         await _emailServiceSender.SendEmailAsync(
             new SendEmailArgs()
             {
                 Email = request.Email,
                 Subject = "Confirm your email",
-                Message = $"{callbackUrl}"
+                Message = $"{confirmationUrl}"
             }, cancellationToken);
 
-        return Ok(new RegisterResponseModel() { Email = request.Email, Url = callbackUrl! });
+        return Ok(new RegisterResponseModel() { Email = request.Email, Url = confirmationUrl! });
     }
     
     [HttpGet("confirm-email")]
@@ -86,10 +86,8 @@ public class AccountController : Controller
     public async Task<ActionResult<LoginResponseModel>> Login(
         [FromBody] LoginRequestModel request, CancellationToken cancellationToken)
     {
-        var deviceType = Request.Headers.GetDeviceType();
-        
         var command = _mapper.Map<LoginRequest>(request);
-        command.DeviceType = deviceType;
+        command.DeviceType = Request.Headers.GetDeviceType();
         
         var response = await _mediator.Send(command, cancellationToken);
          

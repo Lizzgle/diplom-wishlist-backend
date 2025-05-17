@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddCorsPolicy();
         
         services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+        services.Configure<UrlOptions>(configuration.GetSection("Url"));
 
         services.AddControllers();
 

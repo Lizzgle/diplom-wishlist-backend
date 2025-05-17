@@ -17,7 +17,7 @@ public static class HeaderExtensions
         {
             "mobile" => DeviceType.Mobile,
             "web" => DeviceType.Web,
-            _ => throw new InvalidAuthException("Invalid device type")
+            _ => DeviceType.Web,
         };
     }
 }

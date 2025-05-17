@@ -1,7 +1,9 @@
-﻿using Core.Exceptions;
+﻿using System.Text;
+using Core.Exceptions;
 using Identity.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using ArgumentException = Core.Exceptions.ArgumentException;
 
@@ -29,9 +31,15 @@ public class ConfirmEmailHandler : IRequestHandler<ConfirmEmailRequest>
         if (user is null)
             throw new NotFoundException("User not found.");
 
-        var result = await _userManager.ConfirmEmailAsync(user, request.Code);
+        Console.WriteLine(request.Code);
+        
+        var result = await _userManager.ConfirmEmailAsync(user, request.Code.Replace(' ', '+'));
         if (!result.Succeeded)
+        {
+            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+            _logger.LogWarning($"Email confirmation failed: {errors}");
             throw new InvalidTokenException();
+        }
         
         _logger.LogInformation("Результат подтверждения: {Success}", result.Succeeded);
     }

@@ -2,6 +2,8 @@
 using AutoMapper;
 using Identity.Application.Usecases.Users.Commands.DeleteUser;
 using Identity.Application.Usecases.Users.Queries.GetUserByEmailOrName;
+using Identity.Application.Usecases.Users.Queries.GetUserInfo;
+using Identity.Presentation.Models.GetUserInfo;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,5 +35,18 @@ public class UsersController(IMapper mapper, IMediator mediator) : Controller
         await mediator.Send(request, cancellationToken);
         
         return Ok();
+    }
+
+    [HttpGet("info")]
+    [Authorize]
+    public async Task<ActionResult<GetUserInfoResponseModel>> GetUserInfo(CancellationToken cancellationToken)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        var request = new GetUserInfoRequest() { Id = userId! };
+        
+        var response = await mediator.Send(request, cancellationToken);
+        
+        return Ok(mapper.Map<GetUserInfoResponseModel>(response));
     }
 }

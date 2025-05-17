@@ -46,7 +46,7 @@ public class InvitationController(IMapper mapper, IMediator mediator) : Controll
         return Ok();
     } 
     
-    [HttpDelete("{id:guid}}")]
+    [HttpDelete("{id:guid}")]
     [Authorize]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
@@ -79,19 +79,6 @@ public class InvitationController(IMapper mapper, IMediator mediator) : Controll
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         var request = new GetByUserIdRequest() { UserId = userId! };
-        
-        var response = await mediator.Send(request, cancellationToken);
-        
-        return Ok(mapper.Map<GetEventByIdResponseModel>(response));
-    }
-    
-    [HttpGet("/api/events/{eventId}/invitations")]
-    [Authorize]
-    public async Task<ActionResult<GetEventsResponseModel>> GetInvitationsByEventId([FromRoute] Guid eventId, CancellationToken cancellationToken)
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        
-        var request = new GetByEventIdRequest { UserId = userId!, EventId = eventId };
         
         var response = await mediator.Send(request, cancellationToken);
         

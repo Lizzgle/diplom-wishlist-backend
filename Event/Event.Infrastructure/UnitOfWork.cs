@@ -15,12 +15,9 @@ public class UnitOfWork : IUnitOfWork
     
     private IParticipantRepository? _participants;
 
-    private readonly IDistributedCache _distributedCache;
-
-    public UnitOfWork(AppDbContext dbContext, IDistributedCache distributedCache)
+    public UnitOfWork(AppDbContext dbContext)
     {
         _dbContext = dbContext;
-        _distributedCache = distributedCache;
     }
 
     public IEventRepository EventRepository => _events ??= new EventRepository(_dbContext);

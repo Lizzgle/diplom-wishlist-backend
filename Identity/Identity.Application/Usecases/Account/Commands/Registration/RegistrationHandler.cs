@@ -35,6 +35,8 @@ public class RegistrationHandler(UserManager<User> userManager, IMapper mapper)
         }
         
         var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+        
+        Console.WriteLine(code);
 
         return new RegistrationResponse() { Email = request.Email, Code = code };
     }

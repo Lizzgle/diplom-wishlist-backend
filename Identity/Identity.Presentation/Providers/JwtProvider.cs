@@ -31,7 +31,7 @@ public class JwtProvider : IJwtProvider
         var claims = await _userManager.GetClaimsAsync(user);
 
         var signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey)),
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key)),
             SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(

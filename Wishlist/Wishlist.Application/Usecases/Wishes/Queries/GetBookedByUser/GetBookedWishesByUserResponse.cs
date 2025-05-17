@@ -10,21 +10,21 @@ public class GetBookedWishesByUserResponse
 
 public class BookedWish
 {
-    public Guid WishId { get; set; }
+    public Guid WishId { get; init; }
     
-    public string Name { get; set; }
+    public string Name { get; init; }
     
-    public string Description { get; set; }
+    public string Description { get; init; }
     
-    public decimal Price { get; set; }
+    public decimal Price { get; init; }
     
-    public FileData? File { get; set; }
+    public FileData? File { get; init; }
     
-    public List<Link> Links { get; set; }
+    public List<Link> Links { get; init; }
     
-    public Guid WishlistId { get; set; }
+    public Guid WishlistId { get; init; }
     
-    public required string CreatorId { get; set; }
+    public required string CreatorId { get; init; }
     
-    public required string CreatorName { get; set; }
+    public required string CreatorName { get; init; }
 }

@@ -1,4 +1,7 @@
-﻿using Event.Contracts;
+﻿using Common.Refit;
+using Core.Api.Options;
+using Event.Contracts;
+using Event.Contracts.HttpClients;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +19,11 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
+        services.Configure<UrlOptions>(configuration.GetSection("Url"));
+        var urlOptions = configuration.GetRequiredSection(UrlOptions.SectionName).Get<UrlOptions>();
+        
+        services.AddRefitClientForApi<IIdentityHttpClient>(urlOptions.IdentityUrl);
         
         return services;
     }
