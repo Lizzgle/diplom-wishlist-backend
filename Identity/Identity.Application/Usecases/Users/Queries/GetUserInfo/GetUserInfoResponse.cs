@@ -10,5 +10,5 @@ public class GetUserInfoResponse
     
     public required string UserName { get; set; }
     
-    public DateTime DateOfBirth { get; set; }
+    public DateTimeOffset DateOfBirth { get; set; }
 }

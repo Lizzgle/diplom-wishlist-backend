@@ -13,6 +13,8 @@ public class GetAllForUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
         
         var events = await unitOfWork.EventRepository.GetEventsByIdsAsync(eventIds, cancellationToken);
         
-        return mapper.Map<GetAllForUserResponse>(events);
+        var eventDtos = mapper.Map<List<EventDto>>(events);
+        
+        return new GetAllForUserResponse() { Events = eventDtos };
     }
 }

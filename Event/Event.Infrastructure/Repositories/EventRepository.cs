@@ -8,6 +8,7 @@ public class EventRepository(AppDbContext context) : BaseRepository<Domain.Event
     public async Task<List<Domain.Event>> GetEventsByIdsAsync(IEnumerable<Guid> eventIds, CancellationToken cancellationToken)
     {
         return await context.Events
+            .AsNoTracking() 
             .Where(e => eventIds.Contains(e.Id))
             .ToListAsync(cancellationToken);
     }

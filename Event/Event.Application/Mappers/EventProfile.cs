@@ -28,16 +28,13 @@ public class EventProfile : Profile
         CreateMap<Domain.Event, GetByIdResponse>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.DateOfEvent, opt => opt.MapFrom(src => src.DateOfEvent))
-            .ForMember(dest => dest.CreatorId, opt => opt.MapFrom(src => src.CreatorId))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Recurrence, opt => opt.MapFrom(src => src.Recurrence))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
             .ForMember(dest => dest.AccessLevel, opt => opt.MapFrom(src => src.AccessLevel));
 
-        CreateMap<Domain.Event, GetAllForUserResponse>()
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.DateOfEvent, opt => opt.MapFrom(src => src.DateOfEvent))
-            .ForMember(dest => dest.CreatorId, opt => opt.MapFrom(src => src.CreatorId))
-            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location));
+        CreateMap<Domain.Event, EventDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.DateOfEvent, opt => opt.MapFrom(src => src.DateOfEvent));
     }
 }

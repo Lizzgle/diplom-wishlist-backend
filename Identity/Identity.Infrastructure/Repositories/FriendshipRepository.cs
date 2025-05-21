@@ -22,4 +22,12 @@ public class FriendshipRepository(AppDbContext context)
         
         return await query1.Union(query2).ToListAsync(cancellationToken);
     }
+
+    public async Task<Friendship?> GetFriendshipByIdsAsync(string user1Id, string user2Id, CancellationToken cancellationToken = default)
+    {
+        return await context.Friendships
+            .AsNoTracking()
+            .Where(f => (f.Friend1Id == user1Id || f.Friend1Id == user2Id) && (f.Friend2Id == user1Id || f.Friend2Id == user2Id))
+            .FirstOrDefaultAsync(cancellationToken);
+    }
 }

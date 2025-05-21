@@ -8,9 +8,9 @@ public class GetEventByIdResponseModel
 
     public string? Description { get; set; }
 
-    public required DateTime DateOfEvent { get; set; }
+    public required DateTimeOffset DateOfEvent { get; set; }
     
-    public required string CreatorId { get; set; }
+    public required CreatorModel Creator { get; set; }
     
     public RecurrenceType Recurrence { get; set; }
      
@@ -18,5 +18,19 @@ public class GetEventByIdResponseModel
      
     public AccessLevel? AccessLevel { get; set; }
      
-    public List<string>? ParicipantIds { get; set; } = new List<string>();
+    public List<ParticipantDtoModel>? ParticipantDtos { get; set; } = new List<ParticipantDtoModel>();
+}
+
+public class CreatorModel
+{
+    public required string CreatorId { get; set; }
+    
+    public required string Username { get; set; }
+}
+
+public class ParticipantDtoModel
+{
+    public required string CreatorId { get; set; }
+    
+    public required string Username { get; set; }
 }

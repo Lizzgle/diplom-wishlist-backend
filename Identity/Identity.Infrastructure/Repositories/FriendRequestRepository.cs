@@ -37,4 +37,12 @@ public class FriendRequestRepository(AppDbContext context) :
             .Include(f => f.Receiver)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<FriendRequest?> GetFriendRequestByIdsAsync(string user1Id, string user2Id, CancellationToken cancellationToken = default)
+    {
+        return await context.FriendRequests
+            .AsNoTracking()
+            .Where(f => (f.SenderId == user1Id || f.SenderId == user2Id) && (f.ReceiverId == user1Id || f.ReceiverId == user2Id))
+            .FirstOrDefaultAsync(cancellationToken);
+    }
 }

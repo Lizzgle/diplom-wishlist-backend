@@ -35,7 +35,7 @@ namespace Event.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("DateOfEvent")
+                    b.Property<DateTimeOffset>("DateOfEvent")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
@@ -156,15 +156,7 @@ namespace Event.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Event.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Event");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Event.Domain.Event", b =>

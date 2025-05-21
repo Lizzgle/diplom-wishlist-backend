@@ -2,11 +2,12 @@
 
 public class GetEventsResponseModel
 {
-    public required string Name { get; set; }
+    public List<EventDtoModel> Events { get; set; } = new List<EventDtoModel>();
+}
 
-    public required DateTime DateOfEvent { get; set; }
-    
-    public required string CreatorId { get; set; }
-     
-    public string? Location { get; set; }
+public class EventDtoModel
+{
+    public Guid Id { get; set; }
+
+    public required DateTimeOffset DateOfEvent { get; set; }
 }

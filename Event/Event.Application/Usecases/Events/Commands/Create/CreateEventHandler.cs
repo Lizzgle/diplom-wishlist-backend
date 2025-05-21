@@ -18,6 +18,8 @@ public class CreateEventHandler(IUnitOfWork unitOfWork, IMapper mapper, IIdentit
         
         await unitOfWork.EventRepository.AddAsync(@event, cancellationToken);
         
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        
         var participant = new Participant() { EventId = @event.Id, UserId = request.CreatorId };
         
         await unitOfWork.ParticipantRepository.AddAsync(participant, cancellationToken);

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Identity.Application.Usecases.Account.Commands.Registration;
 using Identity.Application.Usecases.Friends.Queries.GetFriends;
+using Identity.Application.Usecases.Users.Queries.GetAllUsers;
 using Identity.Application.Usecases.Users.Queries.GetUserByEmailOrName;
 using Identity.Application.Usecases.Users.Queries.GetUserInfo;
 using Identity.Domain;
@@ -33,5 +34,10 @@ public class UserProfile : Profile
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
             .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth));
+
+        CreateMap<User, AllUserDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
     }
 }

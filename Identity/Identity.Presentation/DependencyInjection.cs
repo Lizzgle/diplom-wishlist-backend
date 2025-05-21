@@ -1,10 +1,13 @@
 ﻿using System.Reflection;
+using System.Text;
 using Common;
 using Common.Notification.Implementations;
 using Common.Notification.Interfaces;
 using Core.Api.Options;
 using Identity.Application.Providers;
 using Identity.Presentation.Providers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace Identity.Presentation;
@@ -13,12 +16,13 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.ConfigureSwagger();
+        services.ConfigureSwaggerGen();
         services.AddFluentValidationConfig(Assembly.GetExecutingAssembly());
         services.AddAutoMapperConfig(Assembly.GetExecutingAssembly());
         services.AddCorsPolicy();
+        services.ConfigureAuthorization(configuration);
         
-        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+
         services.Configure<UrlOptions>(configuration.GetSection("Url"));
 
         services.AddControllers();
@@ -29,9 +33,38 @@ public static class DependencyInjection
         return services;
     }
     
-    public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
+    public static void ConfigureAuthorization(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddEndpointsApiExplorer();
+        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+
+        var jwtOptions = configuration.GetSection("Jwt").Get<JwtOptions>()
+                                    ?? throw new KeyNotFoundException("Can't read jwt from appsettings.json");
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ClockSkew = TimeSpan.Zero,
+                ValidIssuer = jwtOptions.Issuer,
+                ValidAudience = jwtOptions.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
+
+            };
+        });
+
+        services.AddAuthorization();
+    }
+
+    public static IServiceCollection ConfigureSwaggerGen(this IServiceCollection services)
+    {
         services.AddSwaggerGen(option =>
         {
             option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -44,8 +77,22 @@ public static class DependencyInjection
                 Scheme = "Bearer"
             });
 
-           
+            option.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type=ReferenceType.SecurityScheme,
+                            Id="Bearer"
+                        }
+                    },
+                    new string[]{}
+                }
+            });
         });
+
         return services;
     }
 

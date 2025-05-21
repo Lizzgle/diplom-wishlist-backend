@@ -9,4 +9,6 @@ public interface IFriendRequestRepository : IBaseRepository<FriendRequest>
     Task<List<FriendRequest>> GetReceivedFriendRequestsAsync(string userId, CancellationToken cancellationToken = default);
     
     Task<List<FriendRequest>> GetSentFriendRequestsAsync(string userId, CancellationToken cancellationToken = default);
+    
+    Task<FriendRequest?> GetFriendRequestByIdsAsync(string senderId, string receiverId, CancellationToken cancellationToken = default);
 }

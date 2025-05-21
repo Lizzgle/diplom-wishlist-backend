@@ -10,6 +10,6 @@ public class JwtOptions
 
     public string? Issuer { get; set; }
 
-    public DateTime? ExpirationTime { get; set; }
+    public TimeSpan? ExpirationTime { get; set; }
 
 }

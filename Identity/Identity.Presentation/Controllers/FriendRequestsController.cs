@@ -1,10 +1,12 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
 using Identity.Application.Usecases.FriendRequests.Commands.AcceptFriendRequest;
+using Identity.Application.Usecases.FriendRequests.Commands.Delete;
 using Identity.Application.Usecases.FriendRequests.Commands.RejectFriendRequest;
 using Identity.Application.Usecases.FriendRequests.Commands.SendFriendRequest;
 using Identity.Application.Usecases.FriendRequests.Queries.GetReceivedFriendRequests;
 using Identity.Application.Usecases.FriendRequests.Queries.GetSentFriendRequests;
+using Identity.Presentation.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,14 +19,14 @@ public class FriendRequestsController(IMapper mapper, IMediator mediator) : Cont
 {
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> SendFriendRequest([FromBody] string receiverId,
+    public async Task<IActionResult> SendFriendRequest([FromBody] SentFriendRequest request,
         CancellationToken cancellationToken)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
-        var request = new SendFriendRequest() { SenderId = userId!, ReceiverId = receiverId };
+        var command = new SendFriendRequest() { SenderId = userId!, ReceiverId = request.ReceiverId };
         
-        await mediator.Send(request, cancellationToken);
+        await mediator.Send(command, cancellationToken);
         
         return Ok();
     }
@@ -79,5 +81,18 @@ public class FriendRequestsController(IMapper mapper, IMediator mediator) : Cont
         var response = await mediator.Send(request, cancellationToken);
 
         return Ok(response);
+    }
+    
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        var request = new DeleteFriendRequest() { SenderId = userId!, Id = id };
+        
+        await mediator.Send(request, cancellationToken);
+        
+        return Ok();
     }
 }

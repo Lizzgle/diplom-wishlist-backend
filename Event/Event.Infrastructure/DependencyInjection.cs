@@ -1,5 +1,6 @@
 ﻿using Common.Refit;
 using Core.Api.Options;
+using Core.Exceptions;
 using Event.Contracts;
 using Event.Contracts.HttpClients;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ public static class DependencyInjection
         
         services.Configure<UrlOptions>(configuration.GetSection("Url"));
         var urlOptions = configuration.GetRequiredSection(UrlOptions.SectionName).Get<UrlOptions>();
+        if (urlOptions is null || urlOptions.IdentityUrl is null)
+            throw new AppException("Url options are missing.");
         
         services.AddRefitClientForApi<IIdentityHttpClient>(urlOptions.IdentityUrl);
         

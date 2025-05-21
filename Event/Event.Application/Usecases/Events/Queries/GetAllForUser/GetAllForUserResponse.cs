@@ -2,11 +2,12 @@
 
 public class GetAllForUserResponse
 {
-    public required string Name { get; set; }
+    public List<EventDto> Events { get; set; }
+}
 
-    public required DateTime DateOfEvent { get; set; }
-    
-    public required string CreatorId { get; set; }
-     
-    public string? Location { get; set; }
+public class EventDto
+{
+    public Guid Id { get; set; }
+
+    public required DateTimeOffset DateOfEvent { get; set; }
 }

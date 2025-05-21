@@ -6,7 +6,7 @@ namespace Event.Infrastructure.Repositories;
 
 public class ParticipantRepository(AppDbContext context) : IParticipantRepository
 {
-    protected readonly DbSet<Participant> _entities; 
+    private readonly DbSet<Participant> _entities = context.Participants; 
     
     public async Task<List<Participant>> GetAllByEventIdAsync(Guid eventId, CancellationToken cancellationToken = default)
     {

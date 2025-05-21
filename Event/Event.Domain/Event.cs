@@ -8,7 +8,7 @@ public class Event : Entity
 
     public string? Description { get; set; }
 
-    public required DateTime DateOfEvent { get; set; }
+    public required DateTimeOffset DateOfEvent { get; set; }
     
     public required string CreatorId { get; set; }
     

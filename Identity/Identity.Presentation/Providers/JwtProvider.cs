@@ -28,7 +28,7 @@ public class JwtProvider : IJwtProvider
 
     public async Task<string> GenerateJwtAsync(User user, CancellationToken cancellationToken)
     {
-        var claims = await _userManager.GetClaimsAsync(user);
+        var claims = await GetClaimsAsync(user);
 
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key)),
@@ -38,7 +38,7 @@ public class JwtProvider : IJwtProvider
             issuer: _jwtOptions.Issuer,
             audience: _jwtOptions.Audience,
             claims: claims,
-            expires: _jwtOptions.ExpirationTime,
+            expires: DateTime.UtcNow.Add(_jwtOptions.ExpirationTime.Value),
             signingCredentials: signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
@@ -68,7 +68,8 @@ public class JwtProvider : IJwtProvider
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Email, user.Email!)
+            new(ClaimTypes.Email, user.Email!),
+            new(ClaimTypes.Name, user.UserName!)
         };
 
         var roles = await _userManager.GetRolesAsync(user);

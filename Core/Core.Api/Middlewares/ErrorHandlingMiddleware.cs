@@ -77,6 +77,15 @@ public class ErrorHandlingMiddleware
                 title: "Already Exists",
                 detail: ex.Message);
         }
+        catch (AppException ex)
+        {
+            _logger.LogError(ex, "Application exception");
+            await HandleExceptionAsync(context, 
+                statusCode: StatusCodes.Status500InternalServerError,
+                type: "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
+                title: "Application exception",
+                detail: ex.Message);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unhandled exception occurred");

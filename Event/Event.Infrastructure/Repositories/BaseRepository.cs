@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Event.Infrastructure.Repositories;
 
-public class BaseRepository<TEntity>(AppDbContext context) : IBaseRepository<TEntity> where TEntity : Entity
+public abstract class BaseRepository<TEntity>(AppDbContext context) : IBaseRepository<TEntity> where TEntity : Entity
 {
-    protected readonly DbSet<TEntity> _entities; 
+    private readonly DbSet<TEntity> _entities = context.Set<TEntity>(); 
     
     public async Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {

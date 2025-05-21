@@ -6,7 +6,7 @@ namespace Identity.Infrastructure.Repositories;
 
 public class BaseRepository<TEntity>(AppDbContext context) : IBaseRepository<TEntity> where TEntity : Entity
 {
-    protected readonly DbSet<TEntity> _entities; 
+    protected readonly DbSet<TEntity> _entities = context.Set<TEntity>(); 
     
     public async Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {

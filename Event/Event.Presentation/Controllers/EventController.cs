@@ -24,8 +24,9 @@ public class EventController(IMediator mediator, IMapper mapper) : Controller
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         var command = mapper.Map<CreateEventRequest>(request);
+        command.CreatorId = userId!;
         
-        await mediator.Send(request, cancellationToken);
+        await mediator.Send(command, cancellationToken);
         
         return Ok();
     } 
@@ -81,7 +82,7 @@ public class EventController(IMediator mediator, IMapper mapper) : Controller
         
         var response = await mediator.Send(request, cancellationToken);
         
-        return Ok(mapper.Map<GetEventByIdResponseModel>(response));
+        return Ok(mapper.Map<GetEventsResponseModel>(response));
     }
     
     [HttpGet("{id}/invitations")]
