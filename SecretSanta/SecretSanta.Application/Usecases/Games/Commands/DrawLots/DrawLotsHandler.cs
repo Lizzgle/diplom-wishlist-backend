@@ -18,6 +18,16 @@ public class DrawLotsHandler(IUnitOfWork unitOfWork, IDrawLotsProvider drawLotsP
         
         var players = await unitOfWork.PlayerRepository.GetAllPlayersByGameAsync(request.GameId, cancellationToken);
         
-        drawLotsProvider.DrawLots(players.Select(p => p.Id).ToList());
+        var pairs = drawLotsProvider.DrawLots(players.Select(p => p.Id).ToList());
+        
+        var updatedPlayers = players.Select(player =>
+        {
+            player.RecipientId = pairs[player.Id];
+            return player;
+        }).ToList();
+        
+        await unitOfWork.PlayerRepository.UpdateRangeAsync(updatedPlayers, cancellationToken);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

@@ -55,6 +55,25 @@ services:
     - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend:/src:rw"
     - "C:\\Users\\lizzgle\\.nuget\\packages:/home/app/.nuget/packages"
     working_dir: "/app"
+  santa.api:
+    build:
+      context: "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend"
+      dockerfile: "SecretSanta/SecretSanta.Presentation/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/SecretSanta.Presentation.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "eventpresentation:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend\\SecretSanta\\SecretSanta.Presentation:/app:rw"
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend:/src:rw"
+    - "C:\\Users\\lizzgle\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
   wishlist.api:
     build:
       context: "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend"

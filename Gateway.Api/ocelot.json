@@ -36,7 +36,7 @@
       {
         "Name": "Secret santa api",
         "Version": "v1",
-        "Url": "http://event.api:8080/swagger/v1/swagger.json"
+        "Url": "http://santa.api:8080/swagger/v1/swagger.json"
       }
     ]
   }
@@ -154,6 +154,37 @@
       "UpstreamPathTemplate": "/api/invitations/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "SwaggerKey": "event"
+    },
+
+
+
+    {
+      "DownstreamPathTemplate": "/api/games/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "santa.api",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/api/games/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ],
+      "SwaggerKey": "santa"
+    },
+
+
+    {
+      "DownstreamPathTemplate": "/api/players/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "santa.api",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/api/players/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "SwaggerKey": "santa"
     }
   ]
 }
