@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #444;
+        }
+        .message {
+            font-size: 16px;
+            color: #666;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            background: #007bff;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="logo">✨ Wishlist ✨</div>
+    <div class="header">Подтвердите ваш email</div>
+    <div class="message">
+        Спасибо за регистрацию в <strong>Wishlist</strong>!
+        Пожалуйста, подтвердите свой email, нажав на кнопку ниже.
+    </div>
+    <a href="{{ callbackUrl }}" class="button">Подтвердить email</a>
+    <div class="footer">
+        Если вы не регистрировались, просто проигнорируйте это письмо.
+        <br>Служба поддержки: <a href="mailto:support@yourapp.com">support@yourapp.com</a>
+    </div>
+</div>
+</body>
+</html>

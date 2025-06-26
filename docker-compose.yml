@@ -1,0 +1,94 @@
+services:
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: Gateway.Api
+      dockerfile: Dockerfile
+    ports:
+      - "9000:8080"
+      - "9001:8081"
+  
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identitypresentation
+    build:
+      context: .
+      dockerfile: Identity/Identity.Presentation/Dockerfile
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+    depends_on:
+        - identity.db
+      
+  identity.db:
+    image: postgres:16.4
+    container_name: identity.postgres
+    ports:
+      - "5442:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=identitydb
+  
+  redis.db:
+    image: redis:7.4.1
+    container_name: redis.db
+    ports:
+      - "6389:6379"
+  
+  event.api:
+    image: ${DOCKER_REGISTRY-}eventpresentation
+    build:
+      context: .
+      dockerfile: Event/Event.Presentation/Dockerfile
+    ports:
+      - "6000:8080"
+      - "6001:8081"
+    depends_on:
+      - event.db
+
+  event.db:
+    image: postgres:16.4
+    container_name: event.postgres
+    ports:
+      - "5452:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=eventdb
+
+  wishlist.api:
+    image: ${DOCKER_REGISTRY-}wishlistpresentation
+    build:
+      context: .
+      dockerfile: Wishlist/Wishlist.Presentation/Dockerfile
+    ports:
+      - "7000:8080"
+      - "7001:8081"
+    depends_on:
+      - wishlist.db
+
+  wishlist.db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+        
+  santa.api:
+    image: ${DOCKER_REGISTRY-}eventpresentation
+    build:
+      context: .
+      dockerfile: SecretSanta/SecretSanta.Presentation/Dockerfile
+    ports:
+      - "8000:8080"
+      - "8001:8081"
+    depends_on:
+      - santa.db
+
+  santa.db:
+    image: postgres:16.4
+    container_name: santa.postgres
+    ports:
+      - "5552:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=santadb

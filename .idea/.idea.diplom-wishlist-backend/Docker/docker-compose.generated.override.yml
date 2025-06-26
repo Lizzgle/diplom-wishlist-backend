@@ -1,0 +1,94 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  apigateway:
+    build:
+      context: "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend\\Gateway.Api"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Gateway.Api.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "apigateway:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend\\Gateway.Api:/app:rw"
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend:/src:rw"
+    - "C:\\Users\\lizzgle\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  event.api:
+    build:
+      context: "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend"
+      dockerfile: "Event/Event.Presentation/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Event.Presentation.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "eventpresentation:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend\\Event\\Event.Presentation:/app:rw"
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend:/src:rw"
+    - "C:\\Users\\lizzgle\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  identity.api:
+    build:
+      context: "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend"
+      dockerfile: "Identity/Identity.Presentation/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Identity.Presentation.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "identitypresentation:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend\\Identity\\Identity.Presentation:/app:rw"
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend:/src:rw"
+    - "C:\\Users\\lizzgle\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  santa.api:
+    build:
+      context: "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend"
+      dockerfile: "SecretSanta/SecretSanta.Presentation/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/SecretSanta.Presentation.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "eventpresentation:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend\\SecretSanta\\SecretSanta.Presentation:/app:rw"
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend:/src:rw"
+    - "C:\\Users\\lizzgle\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  wishlist.api:
+    build:
+      context: "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend"
+      dockerfile: "Wishlist/Wishlist.Presentation/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/Wishlist.Presentation.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "wishlistpresentation:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend\\Wishlist\\Wishlist.Presentation:/app:rw"
+    - "C:\\Users\\lizzgle\\Desktop\\liza\\diplom-backend:/src:rw"
+    - "C:\\Users\\lizzgle\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"

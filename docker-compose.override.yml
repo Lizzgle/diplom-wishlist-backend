@@ -1,0 +1,71 @@
+services:
+  
+  identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+
+      # options
+      - Jwt__Issuer=WishlistServer
+      - Jwt__Audience=WishlistClient
+      - Jwt__Key=A9jf2s0Djs1PaUdkJqwe0L9vVbmP9yZq
+      - Jwt__ExpirationTime=01:00:00.0
+      
+      - Url__ClientUrl=http://localhost:4200
+      
+      - ConnectionStrings__DefaultConnection=Host=identity.db;Port=5432;Database=identitydb;Username=postgres;Password=postgres
+      
+    ports:
+      - "8080"
+      - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+        
+  event.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+
+      # options
+      - Jwt__Issuer=WishlistServer
+      - Jwt__Audience=WishlistClient
+      - Jwt__Key=A9jf2s0Djs1PaUdkJqwe0L9vVbmP9yZq
+
+      - Url__IdentityUrl=http://localhost:5000
+
+      - ConnectionStrings__DefaultConnection=Host=event.db;Port=5432;Database=eventdb;Username=postgres;Password=postgres
+    ports:
+      - "8080"
+      - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  wishlist.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+
+      # options
+      - Jwt__Issuer=WishlistServer
+      - Jwt__Audience=WishlistClient
+      - Jwt__Key=A9jf2s0Djs1PaUdkJqwe0L9vVbmP9yZq
+
+      - Url__IdentityUrl=http://localhost:5000
+      - Url__SeverUrl=http://localhost:9000
+    ports:
+      - "8080"
+      - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
